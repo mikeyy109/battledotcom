@@ -6,15 +6,15 @@ import java.util.ArrayList;
 public class BattleDotComGame {
 
     private GameHelper gameHelper = new GameHelper();
-    private ArrayList<DotCom> dotComsList = new ArrayList<DotCom>();
+    private ArrayList<BattleDotCom> dotComsList = new ArrayList<BattleDotCom>();
     private int numOfGuesses = 0;
 
     public void setupGame(){
-        DotCom one = new DotCom();
+        BattleDotCom one = new BattleDotCom();
         one.setName("google.com");
-        DotCom two = new DotCom();
+        BattleDotCom two = new BattleDotCom();
         two.setName("github.com");
-        DotCom three = new DotCom();
+        BattleDotCom three = new BattleDotCom();
         three.setName("reddit.com");
 
         dotComsList.add(one);
@@ -25,7 +25,7 @@ public class BattleDotComGame {
         System.out.println("| google.com | github.com | reddit.com |");
         System.out.println("Try to sink with the fewest guesses!");
 
-        for(DotCom dotComToSet:dotComsList){
+        for(BattleDotCom dotComToSet:dotComsList){
             ArrayList<String> newLocation = gameHelper.placeDotCom(3);
             dotComToSet.setLocationCells(newLocation);
         }
@@ -43,7 +43,7 @@ public class BattleDotComGame {
         numOfGuesses++;
         String result = "Miss";
 
-        for(DotCom dotComToTest:dotComsList){
+        for(BattleDotCom dotComToTest:dotComsList){
             result = dotComToTest.checkYourself(userGuess);
             if(result.equals("Hit")){
                 break;
