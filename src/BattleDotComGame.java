@@ -5,31 +5,73 @@ import java.util.ArrayList;
  */
 public class BattleDotComGame {
 
-    public static void main(String[] args){
+    private GameHelper gameHelper = new GameHelper();
+    private ArrayList<DotCom> dotComsList = new ArrayList<DotCom>();
+    private int numOfGuesses = 0;
 
-        int numOfGuesses = 0;
+    public void setupGame(){
+        DotCom one = new DotCom();
+        one.setName("google.com");
+        DotCom two = new DotCom();
+        two.setName("github.com");
+        DotCom three = new DotCom();
+        three.setName("reddit.com");
 
-        GameHelper gameHelper = new GameHelper();
+        dotComsList.add(one);
+        dotComsList.add(two);
+        dotComsList.add(three);
 
-        BattleDotCom battleDot = new BattleDotCom();
+        System.out.println("Your mission is to sink all 3 dot coms.");
+        System.out.println("| google.com | github.com | reddit.com |");
+        System.out.println("Try to sink with the fewest guesses!");
 
-        int randNum = (int) (Math.random() * 5);
+        for(DotCom dotComToSet:dotComsList){
+            ArrayList<String> newLocation = gameHelper.placeDotCom(3);
+            dotComToSet.setLocationCells(newLocation);
+        }
+    }
 
-        ArrayList<String> locations = new ArrayList<String>();
-        locations.add(Integer.toString(randNum));
-        locations.add(Integer.toString(randNum+1));
-        locations.add(Integer.toString(randNum+2));
-        battleDot.setLocationCells(locations);
+    public void startPlaying(){
+        while(!dotComsList.isEmpty()){
+            String userGuess = gameHelper.getUserInput("Enter a location: ");
+            checkUserGuess(userGuess);
+        }
+        finishGame();
+    }
 
-        boolean isAlive = true;
-        while(isAlive){
-            String guess = gameHelper.getUserInput("Enter a number: ");
-            String result = battleDot.checkYourself(guess);
-            numOfGuesses++;
-            if(result.equals("kill")){
-                isAlive = false;
-                System.out.println("You took " + numOfGuesses + " guesses.");
+    private void checkUserGuess(String userGuess){
+        numOfGuesses++;
+        String result = "Miss";
+
+        for(DotCom dotComToTest:dotComsList){
+            result = dotComToTest.checkYourself(userGuess);
+            if(result.equals("Hit")){
+                break;
+            }
+            if(result.equals("Kill")){
+                dotComsList.remove(dotComToTest);
+                break;
             }
         }
+
+        System.out.println(result);
+    }
+
+    private void finishGame(){
+        System.out.println("All dot coms are dead! Well done.");
+
+        if(numOfGuesses <= 18){
+            System.out.println("It only took you "+numOfGuesses+" guesses.");
+            System.out.println("Not bad..");
+        }else{
+            System.out.println("Took you long enough!");
+            System.out.println(numOfGuesses+" guesses? You can do better than that!");
+        }
+    }
+
+    public static void main(String[] args){
+        BattleDotComGame game = new BattleDotComGame();
+        game.setupGame();
+        game.startPlaying();
     }
 }
