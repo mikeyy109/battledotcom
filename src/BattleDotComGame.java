@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Created by Mike Clarke on 30/08/14.
  */
@@ -13,7 +15,10 @@ public class BattleDotComGame {
 
         int randNum = (int) (Math.random() * 5);
 
-        int[] locations = {randNum, randNum+1,randNum+2};
+        ArrayList<String> locations = new ArrayList<String>();
+        locations.add(Integer.toString(randNum));
+        locations.add(Integer.toString(randNum+1));
+        locations.add(Integer.toString(randNum+2));
         battleDot.setLocationCells(locations);
 
         boolean isAlive = true;

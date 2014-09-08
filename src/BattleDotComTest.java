@@ -9,8 +9,8 @@ public class BattleDotComTest {
 
         BattleDotCom battle = new BattleDotCom();
 
-        int[] locations = {2,3, 4};
-        battle.setLocationCells(locations);
+//        int[] locations = {2,3, 4};
+//        battle.setLocationCells(locations);
 
         String userGuess = "2";
         String result = battle.checkYourself(userGuess);
